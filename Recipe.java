@@ -44,4 +44,16 @@ public class Recipe{
 		this.instructions = instructions;
 	}
 
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Name: " + name);
+		sb.append("\n");
+		sb.append("Description: " + description);
+		sb.append("\n");
+		sb.append("Ingredients: " + ingredients.toString());
+		sb.append("\n");
+		sb.append("Instructions: " + instructions.toString());
+		return sb.toString();
+	}
+
 }
