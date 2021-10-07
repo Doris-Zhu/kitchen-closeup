@@ -1,8 +1,11 @@
 import java.util.Scanner;
-public class Main{
-	public static void main(String[] args){
+import java.io.*;
 
-	}
+public class Main {
+    public static void main(String[] args) {
+        chooseFunction();
+    }
+
     private static void chooseFunction() {
         boolean running = true;
         Scanner scan = new Scanner(System.in);
@@ -22,7 +25,7 @@ public class Main{
                     break;
                 }
                 case 2: {
-                    retrieveRecipe();
+                    // retrieveRecipe();
                     break;
                 }
                 case 3: {
@@ -30,17 +33,80 @@ public class Main{
                     break;
                 }
                 default: {
-                	System.out.println("Invalid option.");
-                	break;
+                    System.out.println("Invalid option.");
+                    break;
                 }
             }
         }
     }
 
-//    private static void addRecipe(){
+    private static void addRecipe() {
+        Scanner recipe = new Scanner(System.in);
+        System.out.println("Enter the name of your recipe: ");
+        String recipeName = recipe.nextLine();
+        System.out.println("Enter a description of the recipe: ");
+        String recipeDescr = recipe.nextLine();
+        
+        System.out.println("Enter the number of ingredients in your recipe: ");
+        int numIngr = recipe.nextInt();
+        recipe.nextLine();
+        String[] ingredients = new String[numIngr];
+        for (int i = 0; i < numIngr; i++) {
+            int j = i + 1;
+            System.out.println("Enter the name of ingredient " + j + ": ");
+            String ingr = recipe.nextLine();
+            ingredients[i] = ingr;
+        }
 
-//    }
-//    private static void retrieveRecipe(){
+        System.out.println("Enter the number of cooking steps in your recipe: ");
+        int numSteps = recipe.nextInt();
+        recipe.nextLine();
+        String[] steps = new String[numSteps];
+        for (int i = 0; i < numSteps; i++) {
+            int j = i + 1;
+            System.out.println("Enter cooking step " + j + ": ");
+            String step = recipe.nextLine();
+            steps[i] = step;
+        }
+        System.out.println("--------------------------------");
 
-//    }
+        // create file or make sure it is created
+        File recipes = new File("recipes.txt");
+        try {
+            recipes.createNewFile();
+        } catch (IOException e) {
+            System.out.println("An error occurred when opening file.");
+            e.printStackTrace();
+        }
+
+        //  write to file
+        try {
+            FileWriter recipeWriter = new FileWriter("recipes.txt", true);
+            recipeWriter.write("Recipe Name: " + recipeName + "\n");
+            recipeWriter.write("Description: " + recipeDescr + "\n");
+            
+            recipeWriter.write("Ingredients: ");
+            for (int i = 0; i < numIngr; i++) {
+                recipeWriter.write(ingredients[i] + ", ");
+            }
+            recipeWriter.write("\n");
+            
+            recipeWriter.write("Preparation Instructions: \n");
+            for (int j = 0; j < numSteps; j++) {
+                int k = j+1;
+                recipeWriter.write(k + ". " + steps[j] + "\n");
+            }
+            recipeWriter.write("\n\n");
+            
+            recipeWriter.close();
+            System.out.println("Successfully saved your recipe.");
+        } catch (IOException e) {
+            System.out.println("An error occurred when writing to file.");
+            e.printStackTrace();
+        }
+    }
+
+    // private static void retrieveRecipe(){
+
+    // }
 }
