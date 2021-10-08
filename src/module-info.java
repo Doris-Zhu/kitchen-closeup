@@ -1,3 +1,3 @@
-module simpleGUI {
+module testGUI {
 	requires java.desktop;
 }

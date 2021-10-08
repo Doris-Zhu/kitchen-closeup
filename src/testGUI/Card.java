@@ -1,4 +1,4 @@
-package simpleGUI;
+package testGUI;
 
 import java.awt.Image;
 
@@ -7,9 +7,11 @@ public class Card {
 	
 	//image of the card
 	private Image image;
+	private String recipe;
 	
-	public Card(Image image) {
+	public Card(Image image , String recipe) {
 		this.image = image;
+		this.recipe = recipe;
 	}
 
 	
@@ -25,6 +27,21 @@ public class Card {
 	 */
 	public void setImage(Image image) {
 		this.image = image;
+	}
+	
+	
+	/**
+	 * return recipe
+	 */
+	public String getRecipe() {
+		return recipe;
+	}
+
+	/**
+	 * set recipe
+	 */
+	public void setRecipe(String recipe) {
+		this.recipe = recipe;
 	}
 	
 }
