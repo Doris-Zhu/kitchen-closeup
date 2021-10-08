@@ -4,10 +4,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.io.File;
+import java.nio.file.Files;
 public class Main{
-	public static void main(String[] args){
+    public static void main(String[] args){
         chooseFunction();
-	}
+    }
     private static void chooseFunction() {
         boolean running = true;
         Scanner scan = new Scanner(System.in);
@@ -35,8 +37,8 @@ public class Main{
                     break;
                 }
                 default: {
-                	System.out.println("Invalid option.");
-                	break;
+                    System.out.println("Invalid option.");
+                    break;
                 }
             }
         }
@@ -46,25 +48,59 @@ public class Main{
 
 //    }
     private static void retrieveRecipe(){
-    	Scanner scan = new Scanner(System.in);
-    	while(true){
-    		System.out.print("Please enter the file name of the recipe: ");
-    		String path = scan.nextLine();
-    		if(path.equals("")){
-    			break;
-    		}
-    		else{
-    			Recipe recipe = readFile(path);
-    			System.out.println("Here is the recipe you want: ");
-    			System.out.println(recipe);
-    		}
-    	}
+        Scanner scan = new Scanner(System.in);
+        while(true){
+            ViewAllNames();
+            System.out.print("Please enter the file name of the recipe(Add .txt after the name): ");
+            String pre = "files/";
+            String p = scan.nextLine();
+            String path = pre + p;
+            if(p.equals("")){
+                break;
+            }
+            else{
+                Recipe recipe = readFile(path);
+                System.out.println("Here is the recipe you want: ");
+                System.out.println(recipe);
+            }
+        }
 
     }
+
+    private static ArrayList<String> getAllNames(){
+        String dir = "/Users/zxtaylor/Desktop/build software/project1/kitchen-closeup/files";
+        ArrayList<String> nameList = new ArrayList<String>();
+       // try {
+            File fileName = new File(dir);
+
+            File[] fileList = fileName.listFiles();
+            System.out.println(fileList.toString());
+            //ArrayList<String> nameList = new ArrayList<String>();
+
+            for(File file: fileList){
+                    nameList.add(file.getName());
+            }
+        //} catch (FileNotFoundException e) {
+          //  System.out.printf("Error: file is not found.\n");
+            //System.exit(1);
+        //} catch (IOException e) {
+         //   System.out.printf("Error: failed to read the file.\n");
+           // System.exit(1);
+        //}
+
+        return nameList;
+    }
+
+    private static void ViewAllNames(){
+        ArrayList<String> nameList = getAllNames();
+        System.out.println("Here is the list of all the recipes. Please choose one to view: ");
+        System.out.println(nameList.toString());
+    }
+
     public static Recipe readFile(String path){
-    	Recipe target = new Recipe();
-    	try {
-    		FileReader fRead = new FileReader(path);
+        Recipe target = new Recipe();
+        try {
+            FileReader fRead = new FileReader(path);
             BufferedReader bRead = new BufferedReader(fRead);
             target.setName(bRead.readLine());
             target.setDescription(bRead.readLine());
@@ -90,6 +126,6 @@ public class Main{
             System.exit(1);
         }
         return target;
-    	
+        
     }
 }
