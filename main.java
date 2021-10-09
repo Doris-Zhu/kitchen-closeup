@@ -98,7 +98,7 @@ public class Main{
     }
 
     private static ArrayList<String> getAllNames(){
-        String dir = "/Users/zxtaylor/Desktop/build software/project1/kitchen-closeup/files";
+        String dir = "./files";
         ArrayList<String> nameList = new ArrayList<String>();
        // try {
             File fileName = new File(dir);
