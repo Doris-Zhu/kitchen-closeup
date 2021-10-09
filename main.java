@@ -60,8 +60,38 @@ public class Main{
             }
             else{
                 Recipe recipe = readFile(path);
-                System.out.println("Here is the recipe you want: ");
-                System.out.println(recipe);
+                System.out.println("We found the recipe for you! Please choose the way you want to read it: ");
+                System.out.println("1. Read the entire recipe.");
+                System.out.println("2. Read the instruction one by one. ");
+                System.out.print("Your choice: ");
+                int num = scan.nextInt();
+                if(num == 1){
+                    System.out.println("Here is the recipe you want: ");
+                    System.out.println(recipe);
+                    break;
+                }
+                else if(num == 2){
+                    System.out.println("You are reading the recipe" + recipe.name);
+                    System.out.print("Please enter 's' to start reading the instructions and enter 'q' to quit > ");
+                    String s = scan.next();
+                    s = s.trim();
+                    for(int i = 0; i < recipe.instructions.size(); i++){
+                        if(s.equals("s")){
+                            System.out.println(recipe.instructions.get(i));
+                            System.out.print("Please enter 's' to start reading the instructions and enter 'q' to quit > ");
+                            s = scan.next();
+                        }
+                        else if(s.equals("q")){
+                            break;
+                        }
+                        else{
+                            i--;
+                            System.out.print("Please enter 's' to start reading the instructions and enter 'q' to quit > ");
+                            s = scan.next();
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -74,7 +104,6 @@ public class Main{
             File fileName = new File(dir);
 
             File[] fileList = fileName.listFiles();
-            System.out.println(fileList.toString());
             //ArrayList<String> nameList = new ArrayList<String>();
 
             for(File file: fileList){

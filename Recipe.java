@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
 public class Recipe{
-	private String name;
-	private String description;
-	private ArrayList<String> ingredients;
-	private ArrayList<String> instructions;
+	public String name;
+	public String description;
+	public ArrayList<String> ingredients;
+	public ArrayList<String> instructions;
 
 	public Recipe(){
 		this.ingredients = new ArrayList<>();
