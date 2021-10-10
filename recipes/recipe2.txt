@@ -1,4 +1,4 @@
-name!!
-A test recipe
-a,b,c,d
-First you need to,then you need to,finally
+Dish Name: name!!
+Desciption: A test recipe
+Ingredients: a//b//c//d//
+Instructions: First you need to//then you need to//finally//
