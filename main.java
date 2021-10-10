@@ -71,30 +71,32 @@ public class Main {
         System.out.println("--------------------------------");
 
         // create file or make sure it is created
-        File recipes = new File("recipes.txt");
-        try {
-            recipes.createNewFile();
-        } catch (IOException e) {
-            System.out.println("An error occurred when opening file.");
-            e.printStackTrace();
-        }
+        // File recipes = new File("recipes.txt");
+        // try {
+        //     recipes.createNewFile();
+        // } catch (IOException e) {
+        //     System.out.println("An error occurred when opening file.");
+        //     e.printStackTrace();
+        // }
 
         //  write to file
         try {
-            FileWriter recipeWriter = new FileWriter("recipes.txt", true);
+            File file = new File("recipes");
+            boolean dirCreated = file.mkdir();
+
+            FileWriter recipeWriter = new FileWriter("recipes/" + recipeName + ".txt", true);
             recipeWriter.write("Recipe Name: " + recipeName + "\n");
             recipeWriter.write("Description: " + recipeDescr + "\n");
             
             recipeWriter.write("Ingredients: ");
             for (int i = 0; i < numIngr; i++) {
-                recipeWriter.write(ingredients[i] + ", ");
+                recipeWriter.write(ingredients[i] + "//");
             }
             recipeWriter.write("\n");
             
             recipeWriter.write("Preparation Instructions: \n");
             for (int j = 0; j < numSteps; j++) {
-                int k = j+1;
-                recipeWriter.write(k + ". " + steps[j] + "\n");
+                recipeWriter.write(steps[j] + "//");
             }
             recipeWriter.write("\n\n");
             
