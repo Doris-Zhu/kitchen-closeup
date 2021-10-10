@@ -49,10 +49,11 @@ public class Main{
 //    }
     private static void retrieveRecipe(){
         Scanner scan = new Scanner(System.in);
-        while(true){
+        boolean boo = true;
+        while(boo){
             ViewAllNames();
             System.out.print("Please enter the file name of the recipe(Add .txt after the name): ");
-            String pre = "files/";
+            String pre = "recipes/";
             String p = scan.nextLine();
             String path = pre + p;
             if(p.equals("")){
@@ -76,19 +77,26 @@ public class Main{
                     String s = scan.next();
                     s = s.trim();
                     for(int i = 0; i < recipe.instructions.size(); i++){
+                        System.out.println(i);
                         if(s.equals("s")){
                             System.out.println(recipe.instructions.get(i));
                             System.out.print("Please enter 's' to start reading the instructions and enter 'q' to quit > ");
                             s = scan.next();
+                            if(i == recipe.instructions.size()-1){
+                                System.out.println("The last instruction is already the last one.");
+                                boo = false;
+                                break;
+                            }
+                            
                         }
                         else if(s.equals("q")){
+                            boo = false;
                             break;
                         }
                         else{
-                            i--;
                             System.out.print("Please enter 's' to start reading the instructions and enter 'q' to quit > ");
                             s = scan.next();
-                            break;
+                            i--;
                         }
                     }
                 }
@@ -98,7 +106,7 @@ public class Main{
     }
 
     private static ArrayList<String> getAllNames(){
-        String dir = "./files";
+        String dir = "./recipes";
         ArrayList<String> nameList = new ArrayList<String>();
        // try {
             File fileName = new File(dir);
@@ -131,10 +139,14 @@ public class Main{
         try {
             FileReader fRead = new FileReader(path);
             BufferedReader bRead = new BufferedReader(fRead);
-            target.setName(bRead.readLine());
-            target.setDescription(bRead.readLine());
-            String[] ingre = bRead.readLine().split(",");
-            String[] instr = bRead.readLine().split(",");
+            String[] l_name = bRead.readLine().split(": ");
+            String[] l_des = bRead.readLine().split(": ");
+            target.setName(l_name[1]);
+            target.setDescription(l_des[1]);
+            String[] l_ingre = bRead.readLine().split(": ");
+            String[] ingre = l_ingre[1].split("//");
+            String[] l_instr = bRead.readLine().split(": ");
+            String[] instr = l_instr[1].split("//");
             ArrayList<String> ingredients = new ArrayList<String>();
             ArrayList<String> instructions = new ArrayList<String>();
             for(String igd: ingre){
