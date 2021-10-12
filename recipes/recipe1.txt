@@ -1,4 +1,0 @@
-Recipe Name: Dish Name
-Description: This is the description.
-Ingredients: ingredient1//ingredient2//ingredient3//
-Preparation Instructions: instruction1//instruction2//instruction3//

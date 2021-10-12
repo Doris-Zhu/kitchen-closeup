@@ -1,4 +1,0 @@
-Dish Name: name!!
-Desciption: A test recipe
-Ingredients: a//b//c//d//
-Instructions: First you need to//then you need to//finally//

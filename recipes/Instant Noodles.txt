@@ -1,0 +1,5 @@
+Recipe Name: Instant Noodles
+Description: A very easy dish to cook
+Ingredients: Noodles//flavouring bags//
+Preparation Instructions: Boil the water//Put the noodles and flavouring ingredients in.//Wait for three minutes//
+

@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.File;
@@ -25,7 +26,7 @@ public class Main{
             System.out.print("Your choice: ");
             switch (scan.nextInt()) {
                 case 1: {
-                    //addRecipe();
+                    addRecipe();
                     break;
                 }
                 case 2: {
@@ -44,9 +45,74 @@ public class Main{
         }
     }
 
-//    private static void addRecipe(){
+    private static void addRecipe(){
+        Scanner recipe = new Scanner(System.in);
+        System.out.println("Enter the name of your recipe: ");
+        String recipeName = recipe.nextLine();
+        System.out.println("Enter a description of the recipe: ");
+        String recipeDescr = recipe.nextLine();
+        
+        System.out.println("Enter the number of ingredients in your recipe: ");
+        int numIngr = recipe.nextInt();
+        recipe.nextLine();
+        String[] ingredients = new String[numIngr];
+        for (int i = 0; i < numIngr; i++) {
+            int j = i + 1;
+            System.out.println("Enter the name of ingredient " + j + ": ");
+            String ingr = recipe.nextLine();
+            ingredients[i] = ingr;
+        }
 
-//    }
+        System.out.println("Enter the number of cooking steps in your recipe: ");
+        int numSteps = recipe.nextInt();
+        recipe.nextLine();
+        String[] steps = new String[numSteps];
+        for (int i = 0; i < numSteps; i++) {
+            int j = i + 1;
+            System.out.println("Enter cooking step " + j + ": ");
+            String step = recipe.nextLine();
+            steps[i] = step;
+        }
+        System.out.println("--------------------------------");
+
+        // create file or make sure it is created
+        // File recipes = new File("recipes.txt");
+        // try {
+        //     recipes.createNewFile();
+        // } catch (IOException e) {
+        //     System.out.println("An error occurred when opening file.");
+        //     e.printStackTrace();
+        // }
+
+        //  write to file
+        try {
+            File file = new File("recipes");
+            boolean dirCreated = file.mkdir();
+
+            FileWriter recipeWriter = new FileWriter("recipes/" + recipeName + ".txt", true);
+            recipeWriter.write("Recipe Name: " + recipeName + "\n");
+            recipeWriter.write("Description: " + recipeDescr + "\n");
+            
+            recipeWriter.write("Ingredients: ");
+            for (int i = 0; i < numIngr; i++) {
+                recipeWriter.write(ingredients[i] + "//");
+            }
+            recipeWriter.write("\n");
+            
+            recipeWriter.write("Preparation Instructions: ");
+            for (int j = 0; j < numSteps; j++) {
+                recipeWriter.write(steps[j] + "//");
+            }
+            recipeWriter.write("\n\n");
+            
+            recipeWriter.close();
+            System.out.println("Successfully saved your recipe.");
+        } catch (IOException e) {
+            System.out.println("An error occurred when writing to file.");
+            e.printStackTrace();
+        }
+    }
+
     private static void retrieveRecipe(){
         Scanner scan = new Scanner(System.in);
         boolean boo = true;
@@ -72,12 +138,11 @@ public class Main{
                     break;
                 }
                 else if(num == 2){
-                    System.out.println("You are reading the recipe" + recipe.name);
+                    System.out.println("You are reading the recipe " + recipe.name);
                     System.out.print("Please enter 's' to start reading the instructions and enter 'q' to quit > ");
                     String s = scan.next();
                     s = s.trim();
                     for(int i = 0; i < recipe.instructions.size(); i++){
-                        System.out.println(i);
                         if(s.equals("s")){
                             System.out.println(recipe.instructions.get(i));
                             System.out.print("Please enter 's' to start reading the instructions and enter 'q' to quit > ");
@@ -103,6 +168,14 @@ public class Main{
             }
         }
 
+        // create file or make sure it is created
+        // File recipes = new File("recipes.txt");
+        // try {
+        //     recipes.createNewFile();
+        // } catch (IOException e) {
+        //     System.out.println("An error occurred when opening file.");
+        //     e.printStackTrace();
+        // }
     }
 
     private static ArrayList<String> getAllNames(){
