@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.io.File;
 import java.nio.file.Files;
 public class Main{
+    public static Scanner scan = new Scanner(System.in);
     public static void main(String[] args){
         chooseFunction();
     }
     private static void chooseFunction() {
         boolean running = true;
-        Scanner scan = new Scanner(System.in);
         while (running) {
             System.out.println();
             System.out.println("-----------------------------");
@@ -22,9 +22,12 @@ public class Main{
             System.out.println("Please choose what to do next: ");
             System.out.println("1. Add a recipe");
             System.out.println("2. Retrieve a recipe");
-            System.out.println("3. Quit");
+            System.out.println("3. Delete a recipe");
+            System.out.println("4. Quit");
             System.out.print("Your choice: ");
-            switch (scan.nextInt()) {
+            int i = scan.nextInt();
+            scan.nextLine();
+            switch (i) {
                 case 1: {
                     addRecipe();
                     break;
@@ -34,6 +37,10 @@ public class Main{
                     break;
                 }
                 case 3: {
+                    deleteRecipe();
+                    break;
+                }
+                case 4: {
                     running = false;
                     break;
                 }
@@ -46,31 +53,30 @@ public class Main{
     }
 
     private static void addRecipe(){
-        Scanner recipe = new Scanner(System.in);
         System.out.println("Enter the name of your recipe: ");
-        String recipeName = recipe.nextLine();
+        String recipeName = scan.nextLine();
         System.out.println("Enter a description of the recipe: ");
-        String recipeDescr = recipe.nextLine();
+        String recipeDescr = scan.nextLine();
         
         System.out.println("Enter the number of ingredients in your recipe: ");
-        int numIngr = recipe.nextInt();
-        recipe.nextLine();
+        int numIngr = scan.nextInt();
+        scan.nextLine();
         String[] ingredients = new String[numIngr];
         for (int i = 0; i < numIngr; i++) {
             int j = i + 1;
             System.out.println("Enter the name of ingredient " + j + ": ");
-            String ingr = recipe.nextLine();
+            String ingr = scan.nextLine();
             ingredients[i] = ingr;
         }
 
         System.out.println("Enter the number of cooking steps in your recipe: ");
-        int numSteps = recipe.nextInt();
-        recipe.nextLine();
+        int numSteps = scan.nextInt();
+        scan.nextLine();
         String[] steps = new String[numSteps];
         for (int i = 0; i < numSteps; i++) {
             int j = i + 1;
             System.out.println("Enter cooking step " + j + ": ");
-            String step = recipe.nextLine();
+            String step = scan.nextLine();
             steps[i] = step;
         }
         System.out.println("--------------------------------");
@@ -114,7 +120,6 @@ public class Main{
     }
 
     private static void retrieveRecipe(){
-        Scanner scan = new Scanner(System.in);
         boolean boo = true;
         while(boo){
             ViewAllNames();
@@ -167,15 +172,6 @@ public class Main{
                 }
             }
         }
-
-        // create file or make sure it is created
-        // File recipes = new File("recipes.txt");
-        // try {
-        //     recipes.createNewFile();
-        // } catch (IOException e) {
-        //     System.out.println("An error occurred when opening file.");
-        //     e.printStackTrace();
-        // }
     }
 
     private static ArrayList<String> getAllNames(){
@@ -188,7 +184,9 @@ public class Main{
             //ArrayList<String> nameList = new ArrayList<String>();
 
             for(File file: fileList){
+                    if(file.getName().substring(file.getName().length() - 3).equals("txt")){
                     nameList.add(file.getName());
+                }
             }
         //} catch (FileNotFoundException e) {
           //  System.out.printf("Error: file is not found.\n");
@@ -241,5 +239,22 @@ public class Main{
         }
         return target;
         
+    }
+    public static void deleteRecipe(){
+        ArrayList<String> nameList = getAllNames();
+        System.out.println("Please choose one file to delete: ");
+        System.out.println(nameList.toString());
+        String file = scan.nextLine();
+        try{
+            File f = new File("recipes/" + file);
+            if(f.delete()){
+                System.out.println("Successfully deleted!");
+            }
+            else{
+                System.out.println("Failed to delete.");
+            }
+        }
+        catch(Exception e){
+        }
     }
 }
