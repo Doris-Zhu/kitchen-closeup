@@ -3,16 +3,31 @@ package kitchen.closeup.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+
 import kitchen.closeup.interfaces.IRecipe;
 import kitchen.closeup.interfaces.IRecipeCollection;
+
 
 public class RecipeCollection  implements IRecipeCollection{
 	private List<IRecipe> recipes;
 	private int index;
+
 	
 	public RecipeCollection() {
 		this.recipes = new ArrayList<>();
 		this.index = 0;
+		
+		IRecipe recipe = new Recipe(); // This will move to the Recipe Factory
+		recipe.setName("Chicken Ceaser Salad");
+		recipe.setDescription("Chicken Ceaser Salad");
+		recipe.setImage(new ImageIcon("pictures/salad.png").getImage());
+		List<String> ingredients = new ArrayList<>();
+		ingredients.add("Chicken");
+		ingredients.add("Lettuce");
+		recipe.setIngredients(ingredients);
+		recipes.add(recipe);
+		
 	}
 	
 	public RecipeCollection(List<IRecipe> recipes) {

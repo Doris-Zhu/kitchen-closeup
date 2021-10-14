@@ -2,11 +2,15 @@ package kitchen.closeup.views;
 
 
 //Swing and awt libraries that we need
+import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-
+import kitchen.closeup.interfaces.IRecipe;
+import kitchen.closeup.interfaces.IRecipeCollection;
+import kitchen.closeup.models.Recipe;
+import kitchen.closeup.models.RecipeCollection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,20 +19,19 @@ import java.util.Map;
 
 public class GUI {
 	
-	
+	private static final int WIDTH = 700;
+	private static final int HEIGHT = 500;
 	private JFrame frame;
-	//deck 
-	private Deck deck;
+	private IRecipeCollection recipeCol;
 	//draw panel
 	private DrawPanel recipePanel;
 	private HomePanel     homePanel;
 	private AddRecipePanel     addRecipePanel;
 	//message text
 	private String message = "";
-	//recipe on
-	private boolean recipeOn;
-	private JButton buttonOne;
-	private JButton goHome;
+	//recipe initialized
+	private boolean initDone;
+	
 	
 	
 	private CardLayout cardLayout;
@@ -47,15 +50,15 @@ public class GUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//new draw panel
 		recipePanel = new DrawPanel();
-		recipePanel.setBounds(0, 0, 600, 500);
+		recipePanel.setBounds(0, 0, WIDTH, HEIGHT);
 		recipePanel.setLayout(null);
 		
 		homePanel = new HomePanel();
-		homePanel.setBounds(0, 0, 600, 500);
+		homePanel.setBounds(0, 0, WIDTH, HEIGHT);
 		homePanel.setLayout(null);
 		
 		addRecipePanel = new AddRecipePanel();
-		addRecipePanel.setBounds(0, 0, 600, 500);
+		addRecipePanel.setBounds(0, 0, WIDTH, HEIGHT);
 		addRecipePanel.setLayout(null);
 		
 		//frame.getContentPane().setLayout(null);
@@ -65,14 +68,14 @@ public class GUI {
 		frame.getContentPane().add(recipePanel ,"recipePanel");
 		frame.getContentPane().add(addRecipePanel ,"addRecipePanel");
 		
-		frame.setSize(600,500);
+		frame.setSize(WIDTH,HEIGHT);
 		frame.setVisible(true);
 		
 		
-		buttonOne = new JButton("Go to Recipe Page");
+		JButton buttonOne = new JButton("Go to Recipe Page");
 		
 		homePanel.add(buttonOne);
-		buttonOne.setBounds(200,415, 200, 35);
+		buttonOne.setBounds(250,415, 200, 35);
 		buttonOne.addActionListener(new HomeListener());
 		//add new recipe button to panel
 		JButton showRecipeButton = new JButton("Show Recipes");
@@ -81,7 +84,7 @@ public class GUI {
 		//register new recipe button event listener
 		showRecipeButton.addActionListener(new ShowRecipeListener());
 		
-		goHome = new JButton("Go Home");
+		JButton goHome = new JButton("Go Home");
 		goHome.setBounds(245, 415, 100, 35);
 		recipePanel.add(goHome);
 		//register new recipe button event listener
@@ -130,12 +133,12 @@ public class GUI {
 	 * set up a new recipe
 	 */
 	private void setupNewRecipe() {
-		//create a new deck
-		deck = new Deck();
+		
+		recipeCol = new RecipeCollection();
 		//clear message
 		message = "My Favourite Recipes";
 		//recipe is on
-		recipeOn = true;
+		initDone = true;
 	}
 	
 	
@@ -176,18 +179,34 @@ public class GUI {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String recipe = addRecipePanel.getRecipe();
-			if (!recipeOn) {
+			if (!initDone) {
 				setupNewRecipe();
-				//draw recipes
-				deck.addRecipe("pictures/pizza_resize.png", recipe);
-				recipePanel.setRecipes(deck.getRecipes());
 				
+				IRecipe nrecipe = new Recipe(); // This will move to the Recipe Factory
+				nrecipe.setName(recipe);
+				nrecipe.setImage(new ImageIcon("pictures/pizza_resize.png").getImage());
+				List<String> ingredients = new ArrayList<>();
+				ingredients.add("Tomatoes");
+				ingredients.add("Cheese");
+				ingredients.add("flour");
+				nrecipe.setIngredients(ingredients);
+				recipeCol.add(nrecipe);
+				
+				recipePanel.setRecipes(recipeCol.getRecipes());
 				//makes sure the recipe panel is initialized
-				recipePanel.setRecipeOn(recipeOn);
+				recipePanel.setinitDone(initDone);
 				frame.repaint();
 			}
 			else {
-				deck.addRecipe("pictures/pizza_resize.png", recipe);
+				IRecipe nrecipe = new Recipe(); // This will move to the Recipe Factory
+				nrecipe.setName(recipe);
+				nrecipe.setImage(new ImageIcon("pictures/pizza_resize.png").getImage());
+				List<String> ingredients = new ArrayList<>();
+				ingredients.add("Tomatoes");
+				ingredients.add("Cheese");
+				ingredients.add("flour");
+				nrecipe.setIngredients(ingredients);
+				recipeCol.add(nrecipe);
 			}
 			
 			cardLayout.show(frame.getContentPane(),"recipePanel");
@@ -203,12 +222,11 @@ public class GUI {
 		public void actionPerformed(ActionEvent event) {
 			
 			//start new recipe
-			if (!recipeOn) {
+			if (!initDone) {
 				setupNewRecipe();
-				//draw recipes
-				recipePanel.setRecipes(deck.getRecipes());
+				recipePanel.setRecipes(recipeCol.getRecipes());
 				recipePanel.setMessage(message);
-				recipePanel.setRecipeOn(recipeOn);
+				recipePanel.setinitDone(initDone);
 				frame.repaint();
 			}
 		}
@@ -221,19 +239,27 @@ public class GUI {
  */
 class DrawPanel extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	//recipes
-	private ArrayList<Card> recipes;
+	private List<IRecipe> allRecipes;
+	
 	//message
 	String message = "";
 	//game on
-	boolean recipeOn;
+	boolean initDone;
 	
 	/*
 	 * set recipes to be drawn on panel
 	 */
-	public void setRecipes(ArrayList<Card> recipes) {
-		this.recipes = recipes;
+	
+	public void setRecipes(List<IRecipe> allRecipes) {
+		this.allRecipes = allRecipes;
 	}
+	
 	
 	/*
 	 * set message
@@ -243,10 +269,10 @@ class DrawPanel extends JPanel {
 	}
 	
 	/*
-	 * set recipeOn signal
+	 * set initDone signal
 	 */
-	public void setRecipeOn(boolean recipeOn) {
-		this.recipeOn = recipeOn;
+	public void setinitDone(boolean initDone) {
+		this.initDone = initDone;
 	}
 	
 	/*
@@ -254,21 +280,23 @@ class DrawPanel extends JPanel {
 	 */
 	public void paintComponent(Graphics g) {
 		//green background
-		g.setColor(new Color(0.0f, 0.5f, 0.0f));
+		g.setColor(new Color(0.5f, 0.5f, 0.5f));
 		g.fillRect(0,0,this.getWidth(), this.getHeight());
 		//draw message
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.setColor(new Color(1.0f, 0.0f, 0.0f));
 		g.drawString(message,240,125);
 		//draw recipes
-		if (recipes != null) {
-			for (int i=0; i < recipes.size(); i++) {
-				Image image = recipes.get(i).getImage();
-				g.drawImage(image,(100+i*300),300,this);
-				int y = 225;
-				String recipe = recipes.get(i).getRecipe();
+		
+		
+		if (allRecipes != null) {
+			for (int i=0; i < allRecipes.size(); i++) {
+				Image image = allRecipes.get(i).getImage();
+				g.drawImage(image,(100+i*400),300,this);
+				int y = 175;
+				String recipe = allRecipes.get(i).getFullDescription();
 				for(String line: recipe.split("\n")) {
-					g.drawString(line,100+i*300,y+=g.getFontMetrics().getHeight());
+					g.drawString(line,100+i*400,y+=g.getFontMetrics().getHeight());
 				}
 			}	
 		}
@@ -285,6 +313,10 @@ class DrawPanel extends JPanel {
 class HomePanel extends JPanel {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//message
 	String message = "HOME PAGE";
 	
@@ -306,7 +338,7 @@ class HomePanel extends JPanel {
 		//draw message
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.setColor(new Color(1.0f, 0.0f, 0.0f));
-		g.drawString(message,240,225);
+		g.drawString(message,260,225);
 		
 	
 	}
@@ -320,6 +352,11 @@ class HomePanel extends JPanel {
 class AddRecipePanel extends JPanel {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	//message
 	String message = "Add a Recipe";
 	
