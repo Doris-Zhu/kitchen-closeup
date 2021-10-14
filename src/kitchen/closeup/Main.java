@@ -1,4 +1,8 @@
+package kitchen.closeup;
 import java.util.Scanner;
+
+import kitchen.closeup.models.Recipe;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,9 +11,9 @@ import java.util.ArrayList;
 import java.io.File;
 import java.nio.file.Files;
 public class Main{
-    public static void main(String[] args){
-        chooseFunction();
-    }
+    //public static void main(String[] args){
+    //    chooseFunction();
+    //}
     private static void chooseFunction() {
         boolean running = true;
         Scanner scan = new Scanner(System.in);

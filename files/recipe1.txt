@@ -1,4 +1,0 @@
-Dish Name
-This is the description.
-ingredient1,ingredient2,ingredient3
-instruction1,instruction2,instruction3
