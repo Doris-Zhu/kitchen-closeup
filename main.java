@@ -21,9 +21,10 @@ public class Main{
             System.out.println("-----------------------------");
             System.out.println("Please choose what to do next: ");
             System.out.println("1. Add a recipe");
-            System.out.println("2. Retrieve a recipe");
-            System.out.println("3. Delete a recipe");
-            System.out.println("4. Quit");
+            System.out.println("2. View available recipes");
+            System.out.println("3. Search for a recipe");
+            System.out.println("4. Delete a recipe");
+            System.out.println("5. Quit");
             System.out.print("Your choice: ");
             int i = scan.nextInt();
             scan.nextLine();
@@ -37,10 +38,14 @@ public class Main{
                     break;
                 }
                 case 3: {
-                    deleteRecipe();
+                    searchRecipe();
                     break;
                 }
                 case 4: {
+                    deleteRecipe();
+                    break;
+                }
+                case 5: {
                     running = false;
                     break;
                 }
@@ -123,10 +128,12 @@ public class Main{
         boolean boo = true;
         while(boo){
             ViewAllNames();
-            System.out.print("Please enter the file name of the recipe(Add .txt after the name): ");
+            System.out.print("Please enter the file name of the recipe: ");
+            System.out.println(" ");
             String pre = "recipes/";
             String p = scan.nextLine();
-            String path = pre + p;
+            String txt = ".txt";
+            String path = pre + p + txt;
             if(p.equals("")){
                 break;
             }
@@ -145,7 +152,7 @@ public class Main{
                 else if(num == 2){
                     System.out.println("You are reading the recipe " + recipe.name);
                     System.out.print("Please enter 's' to start reading the instructions and enter 'q' to quit > ");
-                    String s = scan.next();
+                    String s = scan.next().toLowerCase();
                     s = s.trim();
                     for(int i = 0; i < recipe.instructions.size(); i++){
                         if(s.equals("s")){
@@ -171,6 +178,73 @@ public class Main{
                     }
                 }
             }
+        }
+    }
+
+    private static void searchRecipe(){
+        ArrayList<String> nameList = getAllNames();
+        System.out.println("Enter the name of the recipe you'd like to search for: ");
+        String recipeSearch = (scan.nextLine()).toLowerCase();
+        //System.out.println(recipeSearch);
+        boolean bool = false;
+        for (String i : nameList) {
+            String existing = (i.substring(0, (i.length()-4))).toLowerCase();
+            //System.out.println(existing);
+            if(existing.equals(recipeSearch)){
+                System.out.println("We got it!");
+                bool = true;
+
+                String pre = "recipes/";
+                String p = recipeSearch;
+                String txt = ".txt";
+                String path = pre + p + txt;
+                Recipe recipe = readFile(path);
+                boolean boole = true;
+                while(boole){
+                    System.out.println("Please choose the way you want to read it: ");
+                    System.out.println("1. Read the entire recipe.");
+                    System.out.println("2. Read the instruction one by one. ");
+                    System.out.print("Your choice: ");
+                    int choice = scan.nextInt();
+                    if(choice == 1){
+                        System.out.println("Here is the recipe you want: ");
+                        System.out.println(recipe);
+                        break;
+                    }
+                    else if(choice == 2){
+                        System.out.println("You are reading the recipe " + recipe.name);
+                        System.out.print("Please enter 's' to start reading the instructions and enter 'q' to quit > ");
+                        String s = scan.next().toLowerCase();
+                        s = s.trim();
+                        for(int it = 0; it < recipe.instructions.size(); it++){
+                            if(s.equals("s")){
+                                System.out.println(recipe.instructions.get(it));
+                                System.out.print("Please enter 's' to start reading the instructions and enter 'q' to quit > ");
+                                s = scan.next();
+                                if(it == recipe.instructions.size()-1){
+                                    System.out.println("The last instruction is already the last one.");
+                                    boole = false;
+                                    break;
+                                }
+                                
+                            }
+                            else if(s.equals("q")){
+                                boole = false;
+                                break;
+                            }
+                            else{
+                                System.out.print("Please enter 's' to start reading the instructions and enter 'q' to quit > ");
+                                s = scan.next();
+                                it--;
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        if(bool==false){
+            System.out.println("Hate to break it to you...");
         }
     }
 
@@ -201,8 +275,13 @@ public class Main{
 
     private static void ViewAllNames(){
         ArrayList<String> nameList = getAllNames();
+        System.out.println(" ");
         System.out.println("Here is the list of all the recipes. Please choose one to view: ");
-        System.out.println(nameList.toString());
+        for (String i : nameList) {
+            System.out.println(i.substring(0, (i.length()-4)));
+        }
+        System.out.println(" ");
+        //System.out.println(nameList.toString());
     }
 
     public static Recipe readFile(String path){
@@ -243,10 +322,13 @@ public class Main{
     public static void deleteRecipe(){
         ArrayList<String> nameList = getAllNames();
         System.out.println("Please choose one file to delete: ");
-        System.out.println(nameList.toString());
+        for (String i : nameList) {
+            System.out.println(i.substring(0, (i.length()-4)));
+        }
         String file = scan.nextLine();
+        String text = ".txt";
         try{
-            File f = new File("recipes/" + file);
+            File f = new File("recipes/" + file + text);
             if(f.delete()){
                 System.out.println("Successfully deleted!");
             }
