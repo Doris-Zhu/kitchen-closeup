@@ -112,13 +112,44 @@ public class GUI {
 		showRecipeButton2.addActionListener(new HomeListener());
 		
 		
+		addRecipePanelComponents(addRecipePanel);
+		
+	}
+	
+	private void addRecipePanelComponents(JPanel panel)
+	{
 		JLabel recipeName  = new JLabel("Recipe Name");
-		recipeName.setBounds(145, 215, 100, 35);
+		recipeName.setBounds(145, 155, 100, 35);
 		addRecipePanel.add(recipeName);
-		JTextField  edit        =  new JTextField();
-		addRecipePanel.add(edit);
-		edit.setBounds(245, 215, 300, 150);
-		edit.setName("editField");
+		JTextField  name        =  new JTextField();
+		addRecipePanel.add(name);
+		name.setBounds(245, 145, 200, 50);
+		name.setName("name");
+		
+		
+		JLabel description  = new JLabel("Description");
+		description.setBounds(145, 205, 100, 35);
+		addRecipePanel.add(description);
+		JTextField  desc  =  new JTextField();
+		addRecipePanel.add(desc);
+		desc.setBounds(245, 195, 200, 50);
+		desc.setName("description");
+		
+		JLabel ingredients  = new JLabel("Ingredients");
+		ingredients.setBounds(145, 255, 100, 35);
+		addRecipePanel.add(ingredients);
+		JTextField  ing  =  new JTextField();
+		addRecipePanel.add(ing);
+		ing.setBounds(245, 245, 200, 50);
+		ing.setName("ingredients");
+		
+		JLabel instructions  = new JLabel("Recipe");
+		instructions.setBounds(145, 305, 100, 35);
+		addRecipePanel.add(instructions);
+		JTextField  inst  =  new JTextField();
+		addRecipePanel.add(inst);
+		inst.setBounds(245, 295, 200, 50);
+		inst.setName("instructions");
 		
 		JButton saveRecipe = new JButton("Save Recipes");
 		saveRecipe.setBounds(345, 415, 100, 35);
@@ -126,7 +157,6 @@ public class GUI {
 		//register new recipe button event listener
 		saveRecipe.addActionListener(new SaveRecipeListener());
 		addRecipePanel.createComponentMap();
-		
 	}
 	
 	/*
@@ -178,18 +208,30 @@ public class GUI {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String recipe = addRecipePanel.getRecipe();
+			String recipeName = addRecipePanel.getRecipeName();
+			String recipeDesc = addRecipePanel.getRecipeDescription();
+			String recipeIng = addRecipePanel.getRecipeIngredients();
+			String recipeInst = addRecipePanel.getRecipeInstructions();
 			if (!initDone) {
 				setupNewRecipe();
 				
 				IRecipe nrecipe = new Recipe(); // This will move to the Recipe Factory
-				nrecipe.setName(recipe);
+				nrecipe.setName(recipeName);
+				nrecipe.setDescription(recipeDesc);
 				nrecipe.setImage(new ImageIcon("pictures/pizza_resize.png").getImage());
 				List<String> ingredients = new ArrayList<>();
-				ingredients.add("Tomatoes");
-				ingredients.add("Cheese");
-				ingredients.add("flour");
+				for(String ing : recipeIng.split(",")) {
+					ingredients.add(ing);
+				}
+				
+				List<String> instructions = new ArrayList<>();
+				for(String inst : recipeInst.split(",")) {
+					instructions.add(inst);
+				}
+				
+				
 				nrecipe.setIngredients(ingredients);
+				nrecipe.setInstructions(instructions);
 				recipeCol.add(nrecipe);
 				
 				recipePanel.setRecipes(recipeCol.getRecipes());
@@ -199,14 +241,25 @@ public class GUI {
 			}
 			else {
 				IRecipe nrecipe = new Recipe(); // This will move to the Recipe Factory
-				nrecipe.setName(recipe);
+				nrecipe.setName(recipeName);
+				nrecipe.setDescription(recipeDesc);
 				nrecipe.setImage(new ImageIcon("pictures/pizza_resize.png").getImage());
 				List<String> ingredients = new ArrayList<>();
-				ingredients.add("Tomatoes");
-				ingredients.add("Cheese");
-				ingredients.add("flour");
+				for(String ing : recipeIng.split(",")) {
+					ingredients.add(ing);
+				}
+				
+				List<String> instructions = new ArrayList<>();
+				for(String inst : recipeInst.split(",")) {
+					instructions.add(inst);
+				}
+				
+				
 				nrecipe.setIngredients(ingredients);
+				nrecipe.setInstructions(instructions);
 				recipeCol.add(nrecipe);
+				
+				recipePanel.setRecipes(recipeCol.getRecipes());
 			}
 			
 			cardLayout.show(frame.getContentPane(),"recipePanel");
@@ -395,9 +448,27 @@ class AddRecipePanel extends JPanel {
 		}
 	}
 	
-	public String getRecipe()
+	public String getRecipeName()
 	{
-		Component comp = componentMap.get("editField");
+		Component comp = componentMap.get("name");
+		return  ((JTextField)comp).getText();
+	}
+	
+	public String getRecipeDescription()
+	{
+		Component comp = componentMap.get("description");
+		return  ((JTextField)comp).getText();
+	}
+	
+	public String getRecipeIngredients()
+	{
+		Component comp = componentMap.get("ingredients");
+		return  ((JTextField)comp).getText();
+	}
+	
+	public String getRecipeInstructions()
+	{
+		Component comp = componentMap.get("instructions");
 		return  ((JTextField)comp).getText();
 	}
 	
