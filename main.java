@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.io.File;
 import java.nio.file.Files;
-public class Main{
+public class main{
     public static Scanner scan = new Scanner(System.in);
     public static void main(String[] args){
         chooseFunction();
@@ -123,10 +123,10 @@ public class Main{
         boolean boo = true;
         while(boo){
             ViewAllNames();
-            System.out.print("Please enter the file name of the recipe(Add .txt after the name): ");
+            System.out.print("Please enter the title of the recipe: ");
             String pre = "recipes/";
             String p = scan.nextLine();
-            String path = pre + p;
+            String path = pre + p + ".txt";
             if(p.equals("")){
                 break;
             }
@@ -202,7 +202,9 @@ public class Main{
     private static void ViewAllNames(){
         ArrayList<String> nameList = getAllNames();
         System.out.println("Here is the list of all the recipes. Please choose one to view: ");
-        System.out.println(nameList.toString());
+        for (String recipe : nameList)
+            System.out.println(recipe.substring(0, recipe.length() - 4));
+        // System.out.println(nameList.toString());
     }
 
     public static Recipe readFile(String path){
