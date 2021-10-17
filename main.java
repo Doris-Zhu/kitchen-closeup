@@ -244,9 +244,10 @@ public class main{
     }
     public static void deleteRecipe(){
         ArrayList<String> nameList = getAllNames();
-        System.out.println("Please choose one file to delete: ");
-        System.out.println(nameList.toString());
-        String file = scan.nextLine();
+        System.out.println("Please choose recipe to delete: ");
+        for (String recipe : nameList)
+            System.out.println(recipe.substring(0, recipe.length() - 4));
+        String file = scan.nextLine() + ".txt";
         try{
             File f = new File("recipes/" + file);
             if(f.delete()){
