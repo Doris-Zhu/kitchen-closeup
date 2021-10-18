@@ -6,6 +6,12 @@ import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.io.FileWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.io.IOException;
+
 
 import kitchen.closeup.interfaces.IRecipe;
 import kitchen.closeup.interfaces.IRecipeCollection;
@@ -32,12 +38,33 @@ public class GUI {
 	//recipe initialized
 	private boolean initDone;
 	
+	private String path;
+	private boolean appendToFile = true; 
+	
+	public GUI(String path) {
+		this.path = path;
+	}
+	
+	public void writeToFile(IRecipe recipe) {
+		FileWriter write;
+		try {
+			write = new FileWriter(path,appendToFile);
+			PrintWriter printWriter = new PrintWriter(write);
+			printWriter.println(recipe.getFullDescription());
+			printWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	
 	private CardLayout cardLayout;
 	
 	public static void main (String[] args) {
-		GUI gui = new GUI ();
+		GUI gui = new GUI ("/Users/sanchitkumar/eclipse-workspace/sanchit-MVC/recipes/recipes.txt");
 		gui.init();
 	}
 	
@@ -127,6 +154,12 @@ public class GUI {
 		name.setName("name");
 		
 		
+		JTextField  imageField        =  new JTextField();
+		addRecipePanel.add(imageField);
+		imageField.setBounds(445, 145, 200, 50);
+		imageField.setName("imagename");
+		
+		
 		JLabel description  = new JLabel("Description");
 		description.setBounds(145, 205, 100, 35);
 		addRecipePanel.add(description);
@@ -155,8 +188,14 @@ public class GUI {
 		saveRecipe.setBounds(345, 415, 100, 35);
 		addRecipePanel.add(saveRecipe);
 		//register new recipe button event listener
-		saveRecipe.addActionListener(new SaveRecipeListener());
+		saveRecipe.addActionListener(new SaveRecipeListener(this));
 		addRecipePanel.createComponentMap();
+		
+		JButton getImagePath = new JButton("Recipe Image");
+		getImagePath.setBounds(505, 415, 100, 35);
+		addRecipePanel.add(getImagePath);
+		//register new recipe button event listener
+		getImagePath.addActionListener(new OpenImageListener(panel));
 	}
 	
 	/*
@@ -205,6 +244,10 @@ public class GUI {
 	
 	
 	class SaveRecipeListener implements ActionListener {
+		private GUI gui;
+		public SaveRecipeListener(GUI gui) {
+			this.gui = gui;
+		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -212,13 +255,15 @@ public class GUI {
 			String recipeDesc = addRecipePanel.getRecipeDescription();
 			String recipeIng = addRecipePanel.getRecipeIngredients();
 			String recipeInst = addRecipePanel.getRecipeInstructions();
+			String recipeImgPath = addRecipePanel.getImagePath();
 			if (!initDone) {
 				setupNewRecipe();
 				
 				IRecipe nrecipe = new Recipe(); // This will move to the Recipe Factory
 				nrecipe.setName(recipeName);
 				nrecipe.setDescription(recipeDesc);
-				nrecipe.setImage(new ImageIcon("pictures/pizza_resize.png").getImage());
+				//nrecipe.setImage(new ImageIcon("pictures/pizza_resize.png").getImage());
+				nrecipe.setImagePath(recipeImgPath);
 				List<String> ingredients = new ArrayList<>();
 				for(String ing : recipeIng.split(",")) {
 					ingredients.add(ing);
@@ -233,6 +278,7 @@ public class GUI {
 				nrecipe.setIngredients(ingredients);
 				nrecipe.setInstructions(instructions);
 				recipeCol.add(nrecipe);
+				gui.writeToFile(nrecipe);
 				
 				recipePanel.setRecipes(recipeCol.getRecipes());
 				//makes sure the recipe panel is initialized
@@ -243,7 +289,8 @@ public class GUI {
 				IRecipe nrecipe = new Recipe(); // This will move to the Recipe Factory
 				nrecipe.setName(recipeName);
 				nrecipe.setDescription(recipeDesc);
-				nrecipe.setImage(new ImageIcon("pictures/pizza_resize.png").getImage());
+				//nrecipe.setImage(new ImageIcon("pictures/pizza_resize.png").getImage());
+				nrecipe.setImagePath(recipeImgPath);
 				List<String> ingredients = new ArrayList<>();
 				for(String ing : recipeIng.split(",")) {
 					ingredients.add(ing);
@@ -258,9 +305,11 @@ public class GUI {
 				nrecipe.setIngredients(ingredients);
 				nrecipe.setInstructions(instructions);
 				recipeCol.add(nrecipe);
+				gui.writeToFile(nrecipe);
 				
 				recipePanel.setRecipes(recipeCol.getRecipes());
 			}
+			
 			
 			cardLayout.show(frame.getContentPane(),"recipePanel");
 			frame.repaint();
@@ -271,7 +320,7 @@ public class GUI {
 	/*
 	 * new recipe button event handling
 	 */
-	class ShowRecipeListener implements ActionListener {
+	class ShowRecipeListener implements ActionListener { 
 		public void actionPerformed(ActionEvent event) {
 			
 			//start new recipe
@@ -281,6 +330,30 @@ public class GUI {
 				recipePanel.setMessage(message);
 				recipePanel.setinitDone(initDone);
 				frame.repaint();
+			}
+		}
+	}
+	
+	/*
+	 * new recipe button event handling
+	 */
+	class OpenImageListener implements ActionListener {
+		private JPanel parent;
+		private final JFileChooser fc = new JFileChooser();
+		
+		public OpenImageListener(JPanel parent)
+		{
+			this.parent = parent;
+		}
+		public void actionPerformed(ActionEvent event) {
+			
+			int retVal = fc.showOpenDialog(parent);
+			if(retVal  == JFileChooser.APPROVE_OPTION) {
+				File file  = fc.getSelectedFile();
+				AddRecipePanel panel = (AddRecipePanel) parent;
+				Component comp  = panel.getComponent("imagename");
+				((JTextField)comp).setText(file.getPath());
+				
 			}
 		}
 	}
@@ -371,7 +444,7 @@ class HomePanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	//message
-	String message = "HOME PAGE";
+	String message = "WELCOME TO KITCHEN CLOSEUP";
 	
 	/*
 	 * set message
@@ -471,5 +544,19 @@ class AddRecipePanel extends JPanel {
 		Component comp = componentMap.get("instructions");
 		return  ((JTextField)comp).getText();
 	}
+	
+	public String getImagePath()
+	{
+		Component comp = componentMap.get("imagename");
+		return  ((JTextField)comp).getText();
+	}
+	
+	public Component getComponent(String name)
+	{
+		Component comp = componentMap.get(name);
+		return comp;
+	}
+	
+	
 	
 }

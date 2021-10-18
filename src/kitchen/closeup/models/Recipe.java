@@ -3,6 +3,8 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+
 import kitchen.closeup.interfaces.IRecipe;
 
 public class Recipe implements IRecipe {
@@ -11,6 +13,16 @@ public class Recipe implements IRecipe {
 	private List<String> ingredients;
 	private List<String> instructions;
 	private Image image;
+	private String imagePath; 
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+		this.image = new ImageIcon(imagePath).getImage();
+	}
 
 	public Recipe(){
 		this.ingredients = new ArrayList<>();
@@ -64,6 +76,9 @@ public class Recipe implements IRecipe {
 		sb.append("Ingredients: " + ingredients.toString());
 		sb.append("\n");
 		sb.append("Instructions: " + instructions.toString());
+		sb.append("\n");
+		sb.append("Image Path: " + imagePath);
+		
 		return sb.toString();
 	}
 

@@ -10,6 +10,7 @@ public interface IRecipe {
 	public List<String> getIngredients();
 	public List<String> getInstructions();
 	public String getFullDescription();
+	public String getImagePath();
 	
 	
 	public void setName(String name);
@@ -17,5 +18,6 @@ public interface IRecipe {
 	public void setImage(Image image);
 	public void setIngredients(List<String> ingredients);
 	public void setInstructions(List<String> instructions);
+	public void setImagePath(String path);
 	
 }

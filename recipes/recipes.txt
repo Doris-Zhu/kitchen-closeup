@@ -1,0 +1,5 @@
+Name: Pizza
+Description: My Pizza
+Ingredients: [Tomatoes,  Flour ,  Cheese]
+Instructions: [Mix all,  put in Oven]
+Image Path: /Users/sanchitkumar/eclipse-workspace/kitchen-closeup/pictures/pizza_resize.png
