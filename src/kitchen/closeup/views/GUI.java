@@ -6,6 +6,8 @@ import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.io.FileWriter;
 import java.io.File;
 import java.io.FileReader;
@@ -26,8 +28,8 @@ import java.util.Scanner;
 
 public class GUI {
 	
-	private static final int WIDTH = 700;
-	private static final int HEIGHT = 500;
+	public static final int WIDTH = 700;
+	public static final int HEIGHT = 700;
 	private JFrame frame;
 	private IRecipeCollection recipeCol;
 	private IRecipeCollection searchResultCol;
@@ -141,44 +143,44 @@ public class GUI {
 		buttonOne.addActionListener(new HomeListener());
 		//add new recipe button to panel
 		JButton showNextRecipeButton = new JButton(">>");
-		showNextRecipeButton.setBounds(80, 415, 75, 35);
+		showNextRecipeButton.setBounds(80, 0, 75, 35);
 		recipePanel.add(showNextRecipeButton);
 		//register new recipe button event listener
 		showNextRecipeButton.addActionListener(new ShowNextRecipeListener());
 		
 		JButton showLastRecipeButton = new JButton("<<");
-		showLastRecipeButton.setBounds(5, 415, 75, 35);
+		showLastRecipeButton.setBounds(5, 0, 75, 35);
 		recipePanel.add(showLastRecipeButton);
 		//register new recipe button event listener
 		showLastRecipeButton.addActionListener(new ShowPreviousRecipeListener());
 		
 		JButton showStepsButton = new JButton("Show Steps");
-		showStepsButton.setBounds(155, 415, 120, 35);
+		showStepsButton.setBounds(155, 0, 120, 35);
 		recipePanel.add(showStepsButton);
 		//register new recipe button event listener
 		showStepsButton.addActionListener(new ShowStepsListener());
 		
 		
 		JButton goHome = new JButton("Go Home");
-		goHome.setBounds(275, 415, 100, 35);
+		goHome.setBounds(275, 0, 100, 35);
 		recipePanel.add(goHome);
 		//register new recipe button event listener
 		goHome.addActionListener(new GoHomeListener());
 		
 		JButton addRecipe = new JButton("Add Recipe");
-		addRecipe.setBounds(375, 415, 140, 35);
+		addRecipe.setBounds(375, 0, 140, 35);
 		recipePanel.add(addRecipe);
 		//register new recipe button event listener
 		addRecipe.addActionListener(new AddRecipeListener());
 		
 		JButton searchRecipe = new JButton("Search");
-		searchRecipe.setBounds(515, 415, 90, 35);
+		searchRecipe.setBounds(515, 0, 90, 35);
 		recipePanel.add(searchRecipe);
 		//register new recipe button event listener
 		searchRecipe.addActionListener(new SearchListener());
 		
 		JButton deleteRecipe = new JButton("Delete");
-		deleteRecipe.setBounds(605, 415, 90, 35);
+		deleteRecipe.setBounds(605, 0, 90, 35);
 		recipePanel.add(deleteRecipe);
 		//register new recipe button event listener
 		deleteRecipe.addActionListener(new DeleteListener());
@@ -186,7 +188,7 @@ public class GUI {
 		
 		
 		JButton showRecipeButton2 = new JButton("Show Recipes");
-		showRecipeButton2.setBounds(105, 415, 140, 35);
+		showRecipeButton2.setBounds(105, 0, 140, 35);
 		addRecipePanel.add(showRecipeButton2);
 		//register new recipe button event listener
 		showRecipeButton2.addActionListener(new HomeListener());
@@ -202,7 +204,7 @@ public class GUI {
 		
 		addSearchResultPanelComponents();
 		
-		addPanelComponents(deletePanel);
+		//addPanelComponents(deletePanel);
 		addDeletePanelComponents();
 		deletePanel.createComponentMap();
 		
@@ -215,6 +217,10 @@ public class GUI {
 	
 	private void addPanelComponents(JPanel panel)
 	{
+		Border blackline;
+		blackline = BorderFactory.createLineBorder(Color.black);
+		
+		
 		JLabel recipeName  = new JLabel("Recipe Name");
 		recipeName.setBounds(145, 155, 100, 35);
 		panel.add(recipeName);
@@ -222,9 +228,7 @@ public class GUI {
 		panel.add(name);
 		name.setBounds(245, 145, 200, 50);
 		name.setName("name");
-		
-		
-		
+		name.setBorder(blackline);
 		
 		JLabel description  = new JLabel("Description");
 		description.setBounds(145, 205, 100, 35);
@@ -233,6 +237,7 @@ public class GUI {
 		panel.add(desc);
 		desc.setBounds(245, 195, 200, 50);
 		desc.setName("description");
+		desc.setBorder(blackline);
 		
 		JLabel ingredients  = new JLabel("Ingredients");
 		ingredients.setBounds(145, 255, 100, 35);
@@ -241,6 +246,7 @@ public class GUI {
 		panel.add(ing);
 		ing.setBounds(245, 245, 200, 50);
 		ing.setName("ingredients");
+		ing.setBorder(blackline);
 		
 		JLabel instructions  = new JLabel("Recipe");
 		instructions.setBounds(145, 305, 100, 35);
@@ -249,11 +255,12 @@ public class GUI {
 		panel.add(inst);
 		inst.setBounds(245, 295, 200, 50);
 		inst.setName("instructions");
+		inst.setBorder(blackline);
 		
 		
 		
 		JButton goHome = new JButton("Go Home");
-		goHome.setBounds(245, 415, 100, 35);
+		goHome.setBounds(245, 0, 100, 35);
 		panel.add(goHome);
 		//register new recipe button event listener
 		goHome.addActionListener(new GoHomeListener());
@@ -263,25 +270,25 @@ public class GUI {
 	{
 		
 		JButton showRecipeButton = new JButton("Show Recipes");
-		showRecipeButton.setBounds(155, 415, 140, 35);
+		showRecipeButton.setBounds(155, 0, 140, 35);
 		showStepsPanel.add(showRecipeButton);
 		//register new recipe button event listener
 		showRecipeButton.addActionListener(new HomeListener());
 		
 		JButton goHome = new JButton("Go Home");
-		goHome.setBounds(295, 415, 100, 35);
+		goHome.setBounds(295, 0, 100, 35);
 		showStepsPanel.add(goHome);
 		//register new recipe button event listener
 		goHome.addActionListener(new GoHomeListener());
 		
 		JButton showNextRecipeButton = new JButton(">>");
-		showNextRecipeButton.setBounds(80, 415, 75, 35);
+		showNextRecipeButton.setBounds(80, 0, 75, 35);
 		showStepsPanel.add(showNextRecipeButton);
 		//register new recipe button event listener
 		showNextRecipeButton.addActionListener(new ShowNextStepListener());
 		
 		JButton showLastRecipeButton = new JButton("<<");
-		showLastRecipeButton.setBounds(5, 415, 75, 35);
+		showLastRecipeButton.setBounds(5, 0, 75, 35);
 		showStepsPanel.add(showLastRecipeButton);
 		//register new recipe button event listener
 		showLastRecipeButton.addActionListener(new ShowPreviousStepListener());
@@ -290,20 +297,28 @@ public class GUI {
 	private void addRecipePanelComponents()
 	{
 		
+		Border blackline;
+		blackline = BorderFactory.createLineBorder(Color.black);
+		
+		JLabel imageLabel  = new JLabel("Image Path");
+		imageLabel.setBounds(470, 100, 200, 50);
+		addRecipePanel.add(imageLabel);
+		
 		JTextField  imageField        =  new JTextField();
 		addRecipePanel.add(imageField);
 		imageField.setBounds(445, 145, 200, 50);
 		imageField.setName("imagename");
+		imageField.setBorder(blackline);
 		
 		JButton saveRecipe = new JButton("Save Recipes");
-		saveRecipe.setBounds(345, 415, 140, 35);
+		saveRecipe.setBounds(345, 0, 140, 35);
 		addRecipePanel.add(saveRecipe);
 		//register new recipe button event listener
 		saveRecipe.addActionListener(new SaveRecipeListener(this));
 		
 		
 		JButton getImagePath = new JButton("Recipe Image");
-		getImagePath.setBounds(505, 415, 140, 35);
+		getImagePath.setBounds(505, 0, 140, 35);
 		addRecipePanel.add(getImagePath);
 		//register new recipe button event listener
 		getImagePath.addActionListener(new OpenImageListener(addRecipePanel));
@@ -313,7 +328,7 @@ public class GUI {
 	{
 		
 		JButton searchRecipe = new JButton("Search");
-		searchRecipe.setBounds(345, 415, 100, 35);
+		searchRecipe.setBounds(345, 0, 100, 35);
 		searchPanel.add(searchRecipe);
 		//register new recipe button event listener
 		searchRecipe.addActionListener(new SearchResultListener());
@@ -323,12 +338,29 @@ public class GUI {
 	
 	private void addDeletePanelComponents()
 	{
+		Border blackline;
+		blackline = BorderFactory.createLineBorder(Color.black);
 		
 		JButton deleteRecipe = new JButton("Delete");
-		deleteRecipe.setBounds(345, 415, 100, 35);
+		deleteRecipe.setBounds(345, 0, 100, 35);
 		deletePanel.add(deleteRecipe);
 		//register new recipe button event listener
 		deleteRecipe.addActionListener(new DeleteResultListener());
+		
+		JLabel recipeName  = new JLabel("Recipe Name");
+		recipeName.setBounds(145, 155, 100, 35);
+		deletePanel.add(recipeName);
+		JTextField  name        =  new JTextField();
+		deletePanel.add(name);
+		name.setBounds(245, 145, 200, 50);
+		name.setName("name");
+		name.setBorder(blackline);
+		
+		JButton goHome = new JButton("Go Home");
+		goHome.setBounds(245, 0, 100, 35);
+		deletePanel.add(goHome);
+		//register new recipe button event listener
+		goHome.addActionListener(new GoHomeListener());
 		
 	}
 	
@@ -336,7 +368,7 @@ public class GUI {
 	{
 		
 		JButton searchRecipe = new JButton("Back to Search");
-		searchRecipe.setBounds(545, 415, 140, 35);
+		searchRecipe.setBounds(545, 0, 140, 35);
 		searchResultPanel.add(searchRecipe);
 		//register new recipe button event listener
 		searchRecipe.addActionListener(new SearchListener());
@@ -346,12 +378,12 @@ public class GUI {
 	private void addDeleteResultPanelComponents()
 	{
 		JButton deleteRecipe = new JButton("Confirm Delete");
-		deleteRecipe.setBounds(400, 415, 140, 35);
+		deleteRecipe.setBounds(400, 0, 140, 35);
 		deleteResultPanel.add(deleteRecipe);
 		
 		deleteRecipe.addActionListener(new ConfirmDeleteListener());
 		JButton searchRecipe = new JButton("Back to Search");
-		searchRecipe.setBounds(545, 415, 140, 35);
+		searchRecipe.setBounds(545, 0, 140, 35);
 		deleteResultPanel.add(searchRecipe);
 		//register new recipe button event listener
 		searchRecipe.addActionListener(new DeleteListener());
@@ -759,43 +791,18 @@ public class GUI {
 	private void searchDeleteRecipes()
 	{
 		String recipeName = deletePanel.getRecipeName().toLowerCase();
-		String recipeDesc = deletePanel.getRecipeDescription().toLowerCase();
-		String recipeIng = deletePanel.getRecipeIngredients().toLowerCase();
-		String recipeInst = deletePanel.getRecipeInstructions().toLowerCase();
+		
 		deleteCol.clear();
 		if (!initDone) {
 			setupNewRecipe();
 		}
 		for (IRecipe recipe : recipeCol.getRecipes() )
 		{
-			if(!recipeName.isEmpty() && recipe.getName().toLowerCase().contains(recipeName)|| !recipeDesc.isEmpty() && recipe.getDescription().toLowerCase().contains(recipeDesc)) 
+			if(!recipeName.isEmpty() && recipe.getName().toLowerCase().contains(recipeName)) 
 			{
 				deleteCol.add(recipe);
 			}
-			else if(!recipeIng.isEmpty() )
-			{	
-				for ( String r : recipe.getIngredients()) 
-				{
-					if(r.toLowerCase().contains(recipeIng))
-					{
-						deleteCol.add(recipe);
-						break;
-					}
-				}
-			}
-			else if (!recipeInst.isEmpty() ) 
-			{
-					
-				for ( String r : recipe.getInstructions()) 
-				{
-					if(r.toLowerCase().contains(recipeIng))
-					{
-						deleteCol.add(recipe);
-						break;
-					}
-				}
 			
-			}
 		}
 	}
 	
@@ -820,11 +827,6 @@ public class GUI {
 	class ConfirmDeleteListener implements ActionListener { 
 		public void actionPerformed(ActionEvent event) {
 			
-			
-			
-			//start new recipe
-			
-			//setupDeleteResultPanel();
 			deleteRecipes();
 			recipePanel.setRecipes(recipeCol);
 			cardLayout.show(frame.getContentPane(),"recipePanel");
@@ -939,18 +941,75 @@ class DrawPanel extends JPanel {
 		//draw message
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.setColor(new Color(0.0f, 0.0f, 0.0f));
-		g.drawString(message,300,50);
+		g.drawString(message,300,100);
 		//draw recipes
-		
 		
 		if (allRecipes != null) {
 			IRecipe irecipe = allRecipes.current();
 			Image image = irecipe.getImage();
 			g.drawImage(image,100,150,this);
 			int y = 275;
-			String recipe = irecipe.getFullDescription();
+			StringBuilder sb = new StringBuilder();
+			sb.append("Name: " + irecipe.getName());
+			sb.append("\n");
+			sb.append("Description: " + irecipe.getDescription());
+			sb.append("\n");
+			sb.append("Ingredients: " + irecipe.getIngredients().toString().replace("[", "").replace("]", ""));
+			sb.append("\n");		
+			sb.append("Instructions:");
+			
+			int count=0; 
+			for( String str : irecipe.getInstructions() ) {
+				sb.append(count+1);
+				sb.append(")");
+				sb.append(str);
+				sb.append("\n");
+				
+				count++;
+			}
+			
+			String recipe = sb.toString();
+			
 			for(String line: recipe.split("\n")) {
-				g.drawString(line,100,y+=g.getFontMetrics().getHeight());
+				int charw = g.getFontMetrics().stringWidth(line)/line.length();
+				int maxChars  = GUI.WIDTH/(2*charw);
+				if (maxChars > line.length())
+				{
+					maxChars = line.length();
+					
+				}
+				int numLeft  = line.length();
+				int start = 0;
+				int end = maxChars;
+				String []parts = line.split(":");
+				if(parts.length > 1) {
+					g.setFont(new Font("Arial", Font.BOLD, 20));
+					g.drawString(parts[0]+":",100,y);
+					end = maxChars - (parts[0].length()+1);
+					if(end  < 0 ) continue; 
+				}
+				g.setFont(new Font("Arial", Font.PLAIN, 20));
+				int index = parts.length - 1;
+				
+				while (numLeft >  0 ) {
+					
+					g.drawString(parts[index].substring(start,end),300,y);
+					numLeft -=maxChars;
+					start = end;
+					end = start + maxChars;
+					if(end > parts[index].length())
+					{
+						end = parts[index].length();
+						
+					}
+					y+=g.getFontMetrics().getHeight();
+					
+				}
+				y+=g.getFontMetrics().getHeight();
+				
+				
+				
+				
 			}	
 		}
 	
@@ -1038,7 +1097,7 @@ class AddRecipePanel extends JPanel {
 		//draw message
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.setColor(new Color(0.0f, 0.0f, 0.0f));
-		g.drawString(message,240,125);
+		g.drawString(message,300,100);
 		
 	
 	}
@@ -1128,7 +1187,7 @@ class SearchPanel extends JPanel {
 		//draw message
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.setColor(new Color(0.0f, 0.0f, 0.0f));
-		g.drawString(message,240,125);
+		g.drawString(message,250,100);
 		
 	
 	}
@@ -1224,7 +1283,7 @@ class SearchResultPanel extends JPanel {
 		//draw message
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.setColor(new Color(0.0f, 0.0f, 0.0f));
-		g.drawString(message,240,125);
+		g.drawString(message,300,100);
 		//draw recipes
 		
 		
@@ -1233,7 +1292,11 @@ class SearchResultPanel extends JPanel {
 				Image image = allRecipes.get(i).getImage();
 				g.drawImage(image,(100+i*400),300,this);
 				int y = 175;
-				String recipe = allRecipes.get(i).getFullDescription();
+				StringBuilder sb = new StringBuilder();
+				sb.append("Name: " + allRecipes.get(i).getName());
+				sb.append("\n");
+				sb.append("Description: " + allRecipes.get(i).getDescription());
+				String recipe = sb.toString();
 				for(String line: recipe.split("\n")) {
 					g.drawString(line,100+i*400,y+=g.getFontMetrics().getHeight());
 				}
@@ -1277,7 +1340,7 @@ class DeletePanel extends JPanel {
 		//draw message
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.setColor(new Color(0.0f, 0.0f, 0.0f));
-		g.drawString(message,240,125);
+		g.drawString(message,300,100);
 		
 	
 	}
@@ -1372,7 +1435,7 @@ class DeleteResultPanel extends JPanel {
 		//draw message
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.setColor(new Color(0.0f, 0.0f, 0.0f));
-		g.drawString(message,240,125);
+		g.drawString(message,300,100);
 		//draw recipes
 		
 		
@@ -1381,7 +1444,11 @@ class DeleteResultPanel extends JPanel {
 				Image image = allRecipes.get(i).getImage();
 				g.drawImage(image,(100+i*400),300,this);
 				int y = 175;
-				String recipe = allRecipes.get(i).getFullDescription();
+				StringBuilder sb = new StringBuilder();
+				sb.append("Name: " + allRecipes.get(i).getName());
+				sb.append("\n");
+				sb.append("Description: " + allRecipes.get(i).getDescription());
+				String recipe = sb.toString();
 				for(String line: recipe.split("\n")) {
 					g.drawString(line,100+i*400,y+=g.getFontMetrics().getHeight());
 				}
@@ -1467,7 +1534,7 @@ class ShowStepsPanel extends JPanel {
 		//draw message
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.setColor(new Color(0.0f, 0.0f, 0.0f));
-		g.drawString(message,300,50);
+		g.drawString(message,300,100);
 		//draw recipes
 		
 		
@@ -1485,26 +1552,57 @@ class ShowStepsPanel extends JPanel {
 			sb.append("\n");
 			sb.append("Ingredients: " + irecipe.getIngredients().toString().replace("[", "").replace("]", ""));
 			sb.append("\n");		
-			sb.append("Instructions: ");
+			sb.append("Instructions:");
 			
 			int count=0; 
 			for( String str : irecipe.getInstructions() ) {
 				if(count <= index)
 				{
-					sb.append(" ");
 					sb.append(count+1);
 					sb.append(")");
 					sb.append(str);
 					sb.append("\n");
-					sb.append("                     ");
 				}
 				count++;
 			}
-			
 			String recipe = sb.toString();
+			
 			for(String line: recipe.split("\n")) {
-				g.drawString(line,100,y+=g.getFontMetrics().getHeight());
+				int charw = g.getFontMetrics().stringWidth(line)/line.length();
+				int maxChars  = GUI.WIDTH/(2*charw);
+				if (maxChars > line.length())
+				{
+					maxChars = line.length();
+				}
+				int numLeft  = line.length();
+				int start = 0;
+				int end = maxChars;
+				String []parts = line.split(":");
+				if(parts.length > 1) {
+					g.setFont(new Font("Arial", Font.BOLD, 20));
+					g.drawString(parts[0]+":",100,y);
+					end = maxChars - (parts[0].length()+1);
+					if(end  < 0 ) continue; 
+				}
+				g.setFont(new Font("Arial", Font.PLAIN, 20));
+				int index = parts.length - 1;
+				
+				while (numLeft >  0 ) {
+					
+					g.drawString(parts[index].substring(start,end),300,y);
+					numLeft -=maxChars;
+					start = end;
+					end = start + maxChars;
+					if(end > parts[index].length())
+					{
+						end = parts[index].length();
+						
+					}
+					y+=g.getFontMetrics().getHeight();
+				}
+				y+=g.getFontMetrics().getHeight();
 			}	
+				
 		}
 	
 	}
