@@ -20,8 +20,8 @@ public class Recipe implements IRecipe {
 	}
 
 	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-		this.image = new ImageIcon(imagePath).getImage();
+		this.imagePath = imagePath.strip();
+		this.setImage(new ImageIcon(this.imagePath).getImage());
 	}
 
 	public Recipe(){
@@ -73,11 +73,11 @@ public class Recipe implements IRecipe {
 		sb.append("\n");
 		sb.append("Description: " + description);
 		sb.append("\n");
-		sb.append("Ingredients: " + ingredients.toString());
+		sb.append("Ingredients: " + ingredients.toString().replace("[", "").replace("]", ""));
 		sb.append("\n");
-		sb.append("Instructions: " + instructions.toString());
-		sb.append("\n");
-		sb.append("Image Path: " + imagePath);
+		sb.append("Instructions: " + instructions.toString().replace("[", "").replace("]", ""));
+		/*sb.append("\n");
+		sb.append("Image Path: " + imagePath);*/
 		
 		return sb.toString();
 	}

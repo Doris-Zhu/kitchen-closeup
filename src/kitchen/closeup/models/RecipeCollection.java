@@ -46,6 +46,10 @@ public class RecipeCollection  implements IRecipeCollection{
 			return recipes.get(index);
 			
 		}
+		if(this.index >  recipes.size() - 1 )
+		{
+			this.index = recipes.size() - 1;
+		}
 		return null;
 	}
 
@@ -56,7 +60,11 @@ public class RecipeCollection  implements IRecipeCollection{
 		}
 	
 		// TODO Auto-generated method stub
-		this.index = (this.recipes.size() -1);
+		this.index--;
+		if(this.index < 0 )
+		{
+			this.index = 0;
+		}
 		return this.recipes.get(index);
 	}
 
@@ -75,7 +83,7 @@ public class RecipeCollection  implements IRecipeCollection{
 		}
 		for (IRecipe recipe  : this.recipes ) {
 			if(recipe.getName().equals(name)) {
-				this.recipes.remove(name);
+				this.recipes.remove(recipe);
 				this.index=0;
 				break;
 			}
@@ -102,6 +110,18 @@ public class RecipeCollection  implements IRecipeCollection{
 	public List<IRecipe> getRecipes() {
 		// TODO Auto-generated method stub
 		return this.recipes;
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		this.recipes.clear();
+	}
+
+	@Override
+	public IRecipe current() {
+		// TODO Auto-generated method stub
+		return this.recipes.get(index);
 	}
 
 }
