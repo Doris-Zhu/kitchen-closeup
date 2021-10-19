@@ -120,12 +120,14 @@ public class GUI {
 		showStepsPanel.setBounds(0, 0, WIDTH, HEIGHT);
 		showStepsPanel.setLayout(null);
 		
+		
+
 		//frame.getContentPane().setLayout(null);
 		cardLayout = new CardLayout();
 		frame.getContentPane().setLayout(cardLayout);
 		frame.getContentPane().add(homePanel ,"homePanel");
 		frame.getContentPane().add(recipePanel ,"recipePanel");
-		frame.getContentPane().add(addRecipePanel ,"addRecipePanel");
+		frame.getContentPane().add(addRecipePanel,"addRecipePanel");
 		frame.getContentPane().add(searchPanel ,"searchPanel");
 		frame.getContentPane().add(searchResultPanel ,"searchResultPanel");
 		frame.getContentPane().add(deletePanel ,"deletePanel");
@@ -182,7 +184,15 @@ public class GUI {
 		JButton deleteRecipe = new JButton("Delete");
 		deleteRecipe.setBounds(605, 0, 90, 35);
 		recipePanel.add(deleteRecipe);
-		//register new recipe button event listener
+		
+		int scrollBarSize = 20;
+		
+		JScrollBar scrollBar = new JScrollBar();
+		scrollBar.setBackground(Color.BLACK);
+		scrollBar.setBounds(WIDTH - scrollBarSize,0, scrollBarSize,HEIGHT);
+		recipePanel.add(scrollBar);
+		
+				//register new recipe button event listener
 		deleteRecipe.addActionListener(new DeleteListener());
 		
 		
@@ -879,7 +889,6 @@ public class GUI {
 			}
 		}
 	}
-	
 }
 
 
