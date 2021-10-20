@@ -1,5 +1,15 @@
-Name: Pizza
-Description: My Pizza
-Ingredients: [Tomatoes,  Flour ,  Cheese]
-Instructions: [Mix all,  put in Oven]
-Image Path: /Users/sanchitkumar/eclipse-workspace/kitchen-closeup/pictures/pizza_resize.png
+Name: Oatmeal
+Description: a common oat and porridge made from ground steel-cut or rolled oats
+Ingredients: oats, water
+Instructions: Bring water to a boil., Add oats to the water., Remove from heat when the desired consistency has been achieved.
+Image Path: /Users/sanchitkumar/eclipse-workspace/sanchit-MVC/pictures/oatmeal_resize.png
+Name: SPICY TUNA AVOCADO WRAP
+Description: Hand roll with spicy tuna and avocado
+Ingredients: 2 (5 oz) cans Bumble Bee® Solid White Albacore Tuna, drained, 2 Tbsp Sriracha, Nori
+Instructions: In a medium bowl, mash together tuna and avocado until combined.
+Image Path: /Users/sanchitkumar/eclipse-workspace/sanchit-MVC/pictures/tunahandroll_resize.png
+Name: Bacon And Egg Ramen
+Description: Exactly what it sounds like
+Ingredients: 1 package instant ramen, 1 egg, 3 slices bacon
+Instructions: To a pot with 2 cups (480 ml) of boiling water add the ramen seasoning packet and a tablespoon of butter. Stir until the butter melts and then add the ramen noodle cube and cook until the noodles become tender, 2 minutes. Pour the ramen into a bowl. Top the prepared ramen with the fried egg, bacon, and scallions and season with salt and pepper.
+Image Path: /Users/sanchitkumar/eclipse-workspace/sanchit-MVC/pictures/baconramen_resize.png

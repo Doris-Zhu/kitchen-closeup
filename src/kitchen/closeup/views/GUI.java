@@ -1304,7 +1304,7 @@ class SearchResultPanel extends JPanel {
 				StringBuilder sb = new StringBuilder();
 				sb.append("Name: " + allRecipes.get(i).getName());
 				sb.append("\n");
-				sb.append("Description: " + allRecipes.get(i).getDescription());
+				sb.append("Description: " + allRecipes.get(i).getFullDescription());
 				String recipe = sb.toString();
 				for(String line: recipe.split("\n")) {
 					g.drawString(line,100+i*400,y+=g.getFontMetrics().getHeight());
